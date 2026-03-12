@@ -19,7 +19,7 @@ public class UserCommandService {
     }
 
     public UserEntity create(UserCreator userCreator) {
-        if(userRepository.existsByDni(userCreator.dni().value())) {
+        if(Boolean.TRUE.equals(userRepository.existsByDni(userCreator.dni().value()))) {
             throw new UserCommandException("Unable to create user - " +
                     "User with dni " + userCreator.dni().value() + " already exists");
         }

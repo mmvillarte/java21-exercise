@@ -1,6 +1,5 @@
 package org.exercise.user.application.usecase;
 
-import org.exercise.user.application.command.model.UserCommand;
 import org.exercise.user.application.command.model.UserCreator;
 import org.exercise.user.application.command.model.UserDeletion;
 import org.exercise.user.application.command.model.UserUpdate;
@@ -17,13 +16,9 @@ public class UserCommandHandler {
         this.userCommandService = userCommandService;
     }
 
-    public UserCommandResult<?> handle(UserCommand command) {
-        return switch (command) {
-            case UserCreator userCreator -> handleCreate(userCreator);
-            case UserUpdate userUpdate -> handleUpdate(userUpdate);
-            case UserDeletion userDeletion -> handleDelete(userDeletion);
-        };
-    }
+    public UserCommandResult<UserEntity> handle(UserCreator command) { return handleCreate(command); }
+    public UserCommandResult<UserEntity> handle(UserUpdate command) { return handleUpdate(command); }
+    public UserCommandResult<Void> handle(UserDeletion command) { return handleDelete(command); }
 
     private <T> UserCommandResult<T> executeUserCommand (
             Supplier<T> action,

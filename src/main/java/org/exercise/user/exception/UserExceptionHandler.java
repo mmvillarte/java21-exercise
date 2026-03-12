@@ -8,29 +8,29 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class UserExceptionHandler {
     @ExceptionHandler(UserCommandException.class)
-    public UserError<?> handleUserCommandException (
+    public UserError handleUserCommandException (
             UserCommandException ex) {
 
-        return new UserError<>(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+        return new UserError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 
     @ExceptionHandler(NullPointerException.class)
-    public UserError<?> handleNullPointerException (
+    public UserError handleNullPointerException (
             NullPointerException ex) {
 
-        return new UserError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+        return new UserError(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public UserError<?> handleIllegalArgumentException (
+    public UserError handleIllegalArgumentException (
             IllegalArgumentException ex) {
 
-        return new UserError<>(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+        return new UserError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
-    public UserError<?> handleGenericException(Exception ex) {
-        return new UserError<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+    public UserError handleGenericException(Exception ex) {
+        return new UserError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Unexpected error occurred");
     }
 }

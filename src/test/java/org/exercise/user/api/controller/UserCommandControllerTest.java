@@ -47,15 +47,8 @@ class UserCommandControllerTest {
         mockedDNI = mockStatic(DNI.class);
         mockedEmail = mockStatic(Email.class);
 
-        mockedDNI.when(() -> DNI.of(anyString())).thenAnswer(invocation -> {
-            DNI mock = mock(DNI.class);
-            return mock;
-        });
-
-        mockedEmail.when(() -> Email.of(anyString())).thenAnswer(invocation -> {
-            Email mock = mock(Email.class);
-            return mock;
-        });
+        mockedDNI.when(() -> DNI.of(anyString())).thenReturn(mock(DNI.class));
+        mockedEmail.when(() -> Email.of(anyString())).thenReturn(mock(Email.class));
     }
 
     void tearDown() {

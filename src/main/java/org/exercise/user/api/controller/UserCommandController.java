@@ -8,6 +8,7 @@ import org.exercise.user.application.usecase.UserCommandResult;
 import org.exercise.user.domain.dto.UserDTO;
 import org.exercise.user.domain.model.DNI;
 import org.exercise.user.domain.model.Email;
+import org.exercise.user.infrastructure.persistence.model.UserEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -23,7 +24,7 @@ public class UserCommandController {
     }
 
     @PostMapping
-    public UserCommandResult<?> createUser(@RequestBody UserDTO userDTO) {
+    public UserCommandResult<UserEntity> createUser(@RequestBody UserDTO userDTO) {
         Objects.requireNonNull(userDTO, "User cannot be null");
 
         var command = new UserCreator(
@@ -37,7 +38,7 @@ public class UserCommandController {
     }
 
     @PutMapping
-    public UserCommandResult<?> updateUser(@RequestParam UUID id,
+    public UserCommandResult<UserEntity> updateUser(@RequestParam UUID id,
                              @RequestBody UserDTO userDTO) {
         Objects.requireNonNull(id, "User Id cannot be null");
         Objects.requireNonNull(userDTO, "User cannot be null");
@@ -54,7 +55,7 @@ public class UserCommandController {
     }
 
     @DeleteMapping
-    public UserCommandResult<?> deleteUser(@RequestParam UUID id) {
+    public UserCommandResult<Void> deleteUser(@RequestParam UUID id) {
         Objects.requireNonNull(id, "User Id cannot be null");
 
         var command = new UserDeletion(id);

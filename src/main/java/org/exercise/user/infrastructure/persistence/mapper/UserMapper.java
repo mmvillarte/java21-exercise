@@ -6,6 +6,7 @@ import org.exercise.user.domain.dto.UserDTO;
 import org.exercise.user.infrastructure.persistence.model.UserEntity;
 
 public class UserMapper {
+    private UserMapper() {}
 
     public static UserEntity toEntity(UserCreator userCreator) {
         return new UserEntity(

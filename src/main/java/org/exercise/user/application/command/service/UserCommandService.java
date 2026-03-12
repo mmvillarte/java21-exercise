@@ -2,6 +2,7 @@ package org.exercise.user.application.command.service;
 
 import org.exercise.user.application.command.model.UserCreator;
 import org.exercise.user.application.command.model.UserUpdate;
+import org.exercise.user.exception.UserCommandException;
 import org.exercise.user.infrastructure.persistence.mapper.UserMapper;
 import org.exercise.user.infrastructure.persistence.model.UserEntity;
 import org.exercise.user.infrastructure.persistence.repository.UserRepository;
@@ -18,6 +19,11 @@ public class UserCommandService {
     }
 
     public UserEntity create(UserCreator userCreator) {
+        if(userRepository.existsByDni(userCreator.dni().value())) {
+            throw new UserCommandException("Unable to create user - " +
+                    "User with dni " + userCreator.dni().value() + " already exists");
+        }
+
         UserEntity entityUser = UserMapper.toEntity(userCreator);
         userRepository.save(entityUser);
 
@@ -25,6 +31,11 @@ public class UserCommandService {
     }
 
     public UserEntity update(UserUpdate userUpdate) {
+        if(!userRepository.existsById(userUpdate.id())) {
+            throw new UserCommandException("Unable to update user - " +
+                    "User with id " + userUpdate.id() + " does not exist");
+        }
+
         UserEntity entityUser = UserMapper.toEntity(userUpdate);
         userRepository.save(entityUser);
 
@@ -32,6 +43,11 @@ public class UserCommandService {
     }
 
     public void delete(UUID id) {
+        if(!userRepository.existsById(id)) {
+            throw new UserCommandException("Unable to delete user - " +
+                    "User with id " + id + " does not exist");
+        }
+
         userRepository.deleteById(id);
     }
 }

@@ -46,6 +46,7 @@ class UserCommandServiceTest {
         UUID userId = UUID.randomUUID();
         UserEntity expectedEntity = new UserEntity(userId, "John", "Doe", "john.doe@example.com", "12345678T");
 
+        when(userRepository.existsByDni(expectedEntity.getDni())).thenReturn(false);
         when(userRepository.save(any(UserEntity.class))).thenReturn(expectedEntity);
 
         UserEntity result = userCommandService.create(userCreator);
@@ -63,6 +64,7 @@ class UserCommandServiceTest {
         UserUpdate userUpdate = new UserUpdate(userId, "Jane", "Smith", mockEmail, mockDni);
         UserEntity expectedEntity = new UserEntity(userId, "Jane", "Smith", "jane.smith@example.com", "87654321G");
 
+        when(userRepository.existsById(userId)).thenReturn(true);
         when(userRepository.save(any(UserEntity.class))).thenReturn(expectedEntity);
 
         UserEntity result = userCommandService.update(userUpdate);
@@ -79,6 +81,7 @@ class UserCommandServiceTest {
     void deleteUserById() {
         UUID userId = UUID.randomUUID();
 
+        when(userRepository.existsById(userId)).thenReturn(true);
         userCommandService.delete(userId);
 
         verify(userRepository, times(1)).deleteById(userId);
@@ -90,6 +93,7 @@ class UserCommandServiceTest {
         UserCreator userCreator = new UserCreator("Test", "User", mockEmail, mockDni);
         UserEntity expectedEntity = new UserEntity(UUID.randomUUID(), "Test", "User", null, null);
 
+        when(userRepository.existsByDni(expectedEntity.getDni())).thenReturn(false);
         when(userRepository.save(any(UserEntity.class))).thenReturn(expectedEntity);
 
         UserEntity result = userCommandService.create(userCreator);

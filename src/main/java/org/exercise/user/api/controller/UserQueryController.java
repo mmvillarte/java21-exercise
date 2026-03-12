@@ -1,6 +1,5 @@
 package org.exercise.user.api.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.exercise.user.api.model.UserResult;
 import org.exercise.user.application.query.service.UserQueryService;
 import org.exercise.user.domain.dto.UserDTO;
@@ -14,7 +13,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
-@Slf4j
 public class UserQueryController {
     private final UserQueryService userQueryService;
 
@@ -24,8 +22,6 @@ public class UserQueryController {
 
     @GetMapping
     public ResponseEntity<UserResult<UserDTO>> findById(@RequestParam UUID id) {
-        log.info("Searching user by id: {}", id);
-
         UserDTO userDTO = userQueryService.findById(id);
 
         if(userDTO != null) {

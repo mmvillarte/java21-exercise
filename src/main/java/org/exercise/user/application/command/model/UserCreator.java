@@ -1,4 +1,4 @@
-package org.exercise.user.application.command;
+package org.exercise.user.application.command.model;
 
 import org.exercise.user.domain.model.DNI;
 import org.exercise.user.domain.model.Email;

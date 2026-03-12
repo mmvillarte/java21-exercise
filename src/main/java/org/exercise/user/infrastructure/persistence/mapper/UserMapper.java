@@ -1,7 +1,7 @@
 package org.exercise.user.infrastructure.persistence.mapper;
 
-import org.exercise.user.application.command.UserCreator;
-import org.exercise.user.application.command.UserUpdate;
+import org.exercise.user.application.command.model.UserCreator;
+import org.exercise.user.application.command.model.UserUpdate;
 import org.exercise.user.domain.dto.UserDTO;
 import org.exercise.user.infrastructure.persistence.model.UserEntity;
 

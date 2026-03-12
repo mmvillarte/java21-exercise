@@ -1,7 +1,7 @@
 package org.exercise.user.application.command.service;
 
-import org.exercise.user.application.command.UserCreator;
-import org.exercise.user.application.command.UserUpdate;
+import org.exercise.user.application.command.model.UserCreator;
+import org.exercise.user.application.command.model.UserUpdate;
 import org.exercise.user.infrastructure.persistence.mapper.UserMapper;
 import org.exercise.user.infrastructure.persistence.model.UserEntity;
 import org.exercise.user.infrastructure.persistence.repository.UserRepository;

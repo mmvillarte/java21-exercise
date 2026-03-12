@@ -1,8 +1,8 @@
 package org.exercise.user.api.controller;
 
-import org.exercise.user.application.command.UserCreator;
-import org.exercise.user.application.command.UserDeletion;
-import org.exercise.user.application.command.UserUpdate;
+import org.exercise.user.application.command.model.UserCreator;
+import org.exercise.user.application.command.model.UserDeletion;
+import org.exercise.user.application.command.model.UserUpdate;
 import org.exercise.user.application.usecase.UserCommandHandler;
 import org.exercise.user.application.usecase.UserCommandResult;
 import org.exercise.user.domain.dto.UserDTO;

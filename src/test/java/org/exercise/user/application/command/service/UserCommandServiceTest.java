@@ -1,7 +1,7 @@
 package org.exercise.user.application.command.service;
 
-import org.exercise.user.application.command.UserCreator;
-import org.exercise.user.application.command.UserUpdate;
+import org.exercise.user.application.command.model.UserCreator;
+import org.exercise.user.application.command.model.UserUpdate;
 import org.exercise.user.domain.model.DNI;
 import org.exercise.user.domain.model.Email;
 import org.exercise.user.infrastructure.persistence.model.UserEntity;

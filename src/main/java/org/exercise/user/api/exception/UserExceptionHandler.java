@@ -16,6 +16,13 @@ public class UserExceptionHandler {
         return new UserError(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public UserError handleUserNotFoundException (
+            UserNotFoundException ex) {
+
+        return new UserError(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    }
+
     @ExceptionHandler(NullPointerException.class)
     public UserError handleNullPointerException (
             NullPointerException ex) {

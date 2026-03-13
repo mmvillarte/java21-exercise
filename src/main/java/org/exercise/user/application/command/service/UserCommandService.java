@@ -1,5 +1,6 @@
 package org.exercise.user.application.command.service;
 
+import org.exercise.user.application.command.exception.UserNotFoundException;
 import org.exercise.user.application.command.model.UserCreator;
 import org.exercise.user.application.command.model.UserUpdate;
 import org.exercise.user.application.command.exception.UserCommandException;
@@ -32,7 +33,7 @@ public class UserCommandService {
 
     public UserEntity update(UserUpdate userUpdate) {
         if(!userRepository.existsById(userUpdate.id())) {
-            throw new UserCommandException("Unable to update user - " +
+            throw new UserNotFoundException("Unable to update user - " +
                     "User with id " + userUpdate.id() + " does not exist");
         }
 
@@ -44,7 +45,7 @@ public class UserCommandService {
 
     public void delete(UUID id) {
         if(!userRepository.existsById(id)) {
-            throw new UserCommandException("Unable to delete user - " +
+            throw new UserNotFoundException("Unable to delete user - " +
                     "User with id " + id + " does not exist");
         }
 

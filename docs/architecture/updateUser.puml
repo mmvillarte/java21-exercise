@@ -1,0 +1,27 @@
+@startuml UpdateUserSequence
+
+actor Client
+participant UserController
+participant UserCommandHandler
+participant UserCommandService
+participant UserRepository
+
+Client -> UserController : PUT /users (UpdateUser)
+UserController -> UserCommandHandler : handle(updateUser)
+UserCommandHandler -> UserCommandService : update(updateUser)
+
+UserCommandService -> UserRepository : findById(id)
+
+alt User exists
+    UserCommandService -> UserRepository : save(UserEntity)
+    UserRepository --> UserCommandService : UserEntity
+    UserCommandService --> UserCommandHandler : UserEntity
+    UserCommandHandler --> UserController : UserSuccess<UserEntity>
+    UserController --> Client : HTTP 200 OK
+else User not found
+    UserCommandService --> UserCommandHandler : throw UserNotFoundException
+    UserCommandHandler --> UserController : (propagates exception)
+    UserController --> Client : HTTP 404 Not Found
+end
+
+@enduml

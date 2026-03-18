@@ -1,0 +1,28 @@
+@startuml DeleteUserSequence
+
+actor Client
+participant UserController
+participant UserCommandHandler
+participant UserCommandService
+participant UserRepository
+
+Client -> UserController : DELETE /users (DeleteUser)
+UserController -> UserCommandHandler : handle(deleteUser)
+UserCommandHandler -> UserCommandService : delete(deleteUser)
+
+UserCommandService -> UserRepository : existsById(uuid)
+
+alt User exists
+    UserCommandService -> UserRepository : deleteById(uuid)
+    UserRepository --> UserCommandService : Void
+    UserCommandService --> UserCommandHandler : Void
+    UserCommandHandler --> UserController : Void
+    UserController --> Client : HTTP 204 No Content
+
+else User does not exist
+    UserCommandService --> UserCommandHandler : throw UserNotFoundException
+    UserCommandHandler --> UserController : (propagates exception)
+    UserController --> Client : HTTP 404 Not Found
+end
+
+@enduml

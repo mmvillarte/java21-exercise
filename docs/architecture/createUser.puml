@@ -1,0 +1,28 @@
+@startuml CreateUserSequence
+
+actor Client
+participant UserController
+participant UserCommandHandler
+participant UserCommandService
+participant UserRepository
+
+Client -> UserController : POST /users (CreateUser)
+UserController -> UserCommandHandler : handle(createUser)
+UserCommandHandler -> UserCommandService : create(createUser)
+
+UserCommandService -> UserRepository : existsByDni(dni)
+
+alt User does not exist
+    UserCommandService -> UserRepository : save(UserEntity)
+    UserRepository --> UserCommandService : UserEntity
+    UserCommandService --> UserCommandHandler : UserEntity
+    UserCommandHandler --> UserController : UserSuccess<UserEntity>
+    UserController --> Client : HTTP 201 Created
+
+else User already exists
+    UserCommandService --> UserCommandHandler : throw UserCommandException
+    UserCommandHandler --> UserController : (propagates exception)
+    UserController --> Client : HTTP 400 Bad Request
+end
+
+@enduml

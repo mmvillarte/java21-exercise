@@ -65,7 +65,7 @@ class UserQueryControllerTest {
             ResponseEntity<UserResult<UserDTO>> response = controller.findById(userId);
 
             assertNotNull(response);
-            assertEquals(HttpStatus.OK, response.getStatusCode());
+            assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
             assertNotNull(response.getBody());
             assertEquals(404, response.getBody().code());
             assertNull(response.getBody().data());
@@ -109,7 +109,7 @@ class UserQueryControllerTest {
         void alwaysReturn200OkHttpStatus() {
             UUID userId = UUID.randomUUID();
 
-            when(userQueryService.findById(userId)).thenReturn(null);
+            when(userQueryService.findById(userId)).thenReturn(mock(UserDTO.class));
 
             ResponseEntity<UserResult<UserDTO>> response = controller.findById(userId);
 

@@ -1,18 +1,21 @@
 package org.exercise.user.application.command.service;
 
+import org.exercise.user.application.command.exception.UserCommandException;
 import org.exercise.user.application.command.exception.UserNotFoundException;
 import org.exercise.user.application.command.model.CreateUser;
 import org.exercise.user.application.command.model.UpdateUser;
-import org.exercise.user.application.command.exception.UserCommandException;
 import org.exercise.user.infrastructure.persistence.mapper.UserMapper;
 import org.exercise.user.infrastructure.persistence.model.UserEntity;
 import org.exercise.user.infrastructure.persistence.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
 public class UserCommandService {
+    private static final Logger log = LoggerFactory.getLogger(UserCommandService.class);
     private final UserRepository userRepository;
 
     public UserCommandService(UserRepository userRepository) {
@@ -28,6 +31,8 @@ public class UserCommandService {
         UserEntity entityUser = UserMapper.toEntity(createUser);
         userRepository.save(entityUser);
 
+        log.info("User created with id: {}", entityUser.getId());
+
         return entityUser;
     }
 
@@ -40,6 +45,8 @@ public class UserCommandService {
         UserEntity entityUser = UserMapper.toEntity(updateUser);
         userRepository.save(entityUser);
 
+        log.info("User updated with id: {}", entityUser.getId());
+
         return entityUser;
     }
 
@@ -50,5 +57,7 @@ public class UserCommandService {
         }
 
         userRepository.deleteById(id);
+
+        log.info("User deleted with id: {}", id);
     }
 }

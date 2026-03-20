@@ -9,6 +9,8 @@ import org.exercise.user.application.query.model.UserDTO;
 import org.exercise.user.domain.model.DNI;
 import org.exercise.user.domain.model.Email;
 import org.exercise.user.infrastructure.persistence.model.UserEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -17,6 +19,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/users")
 public class UserCommandController {
+    private static final Logger log = LoggerFactory.getLogger(UserCommandController.class);
+
     private final UserCommandHandler handler;
 
     public UserCommandController(UserCommandHandler handler) {
@@ -26,6 +30,8 @@ public class UserCommandController {
     @PostMapping
     public UserCommandResult<UserEntity> createUser(@RequestBody UserDTO userDTO) {
         Objects.requireNonNull(userDTO, "User cannot be null");
+
+        log.info("Creating user with email: {}", userDTO.email());
 
         var command = new CreateUser(
                 userDTO.firstName(),
@@ -43,6 +49,8 @@ public class UserCommandController {
         Objects.requireNonNull(id, "User Id cannot be null");
         Objects.requireNonNull(userDTO, "User cannot be null");
 
+        log.info("Updating user with uuid: {}", id);
+
         var command = new UpdateUser(
                 id,
                 userDTO.firstName(),
@@ -57,6 +65,8 @@ public class UserCommandController {
     @DeleteMapping
     public UserCommandResult<Void> deleteUser(@RequestParam UUID id) {
         Objects.requireNonNull(id, "User Id cannot be null");
+
+        log.info("Physically Deleting user with uuid: {}", id);
 
         var command = new DeleteUser(id);
 

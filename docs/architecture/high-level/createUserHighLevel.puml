@@ -1,0 +1,22 @@
+@startuml CreateUserHighLevel
+
+actor User
+participant "User API" as API
+participant "User Service" as Service
+database DB
+
+User -> API : Create user request
+API -> Service : createUser(data)
+
+Service -> DB : check if user exists
+
+alt User does not exist
+    Service -> DB : save user
+    Service --> API : success
+    API --> User : 201 Created
+else User already exists
+    Service --> API : error
+    API --> User : 400 Bad Request
+end
+
+@enduml

@@ -1,0 +1,22 @@
+@startuml UpdateUserHighLevel
+
+actor User
+participant "User API" as API
+participant "User Service" as Service
+database DB
+
+User -> API : Update user request
+API -> Service : updateUser(data)
+
+Service -> DB : find user by id
+
+alt User exists
+    Service -> DB : update user
+    Service --> API : success
+    API --> User : 200 OK
+else User not found
+    Service --> API : error
+    API --> User : 404 Not Found
+end
+
+@enduml
